@@ -17,7 +17,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="node_modules/intl-tel-input/build/css/intlTelInput.css">
 </head>
 
 <body class="bg-gradient-primary">
@@ -61,7 +61,19 @@
                                         <label for="asesor" class="form-check-label">Asesor</label>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <!--Aqui esta el input de telefono, hay que agregar 
+                                            una clase hide al css y una clase para que se vean bonitos, 
+                                        otra clase telError para cuando este mal el numero-->
+                                        <input type="tel" id="phone">
+                                        <span id="valid-msg" class="hide">✓ Valid</span>
+                                        <span id="error-msg" class="hide"></span>
+                                    </div>
+                                    <div class="col-sm-6">
+
                                     </div>
                                 </div>
                                 <input type="submit" value="Registrarse" class="btn btn-primary btn-user btn-block">
@@ -91,7 +103,46 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    <script src="node_modules/intl-tel-input/build/js/intlTelInput.js"></script>
+    <script>
+        var input = document.querySelector("#phone"),
+            errorMsg = document.querySelector("#error-msg"),
+            validMsg = document.querySelector("#valid-msg");
 
+        // here, the index maps to the error code returned from getValidationError - see readme
+        var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+        // initialise plugin
+        var iti = window.intlTelInput(input, {
+            utilsScript: "node_modules/intl-tel-input/build/js/utils.js?1585994360633"
+        });
+
+        var reset = function() {
+            input.classList.remove("telError");
+            errorMsg.innerHTML = "";
+            errorMsg.classList.add("hide");
+            validMsg.classList.add("hide");
+        };
+
+        // on blur: validate
+        input.addEventListener('blur', function() {
+            reset();
+            if (input.value.trim()) {
+                if (iti.isValidNumber()) {
+                    validMsg.classList.remove("hide");
+                } else {
+                    input.classList.add("telError");
+                    var errorCode = iti.getValidationError();
+                    errorMsg.innerHTML = errorMap[errorCode];
+                    errorMsg.classList.remove("hide");
+                }
+            }
+        });
+
+        // on keyup / change flag: reset
+        input.addEventListener('change', reset);
+        input.addEventListener('keyup', reset);
+    </script>
 </body>
 
 </html>
