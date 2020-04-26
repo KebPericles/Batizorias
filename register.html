@@ -17,7 +17,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="node_modules/intl-tel-input/build/css/intlTelInput.css">
+    <link rel="stylesheet" href="intl-tel-input/build/css/intlTelInput.css">
 </head>
 
 <body class="bg-gradient-primary">
@@ -103,7 +103,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-    <script src="node_modules/intl-tel-input/build/js/intlTelInput.js"></script>
+    <script src="intl-tel-input/build/js/intlTelInput.js"></script>
     <script>
         var input = document.querySelector("#phone"),
             errorMsg = document.querySelector("#error-msg"),
@@ -114,7 +114,7 @@
 
         // initialise plugin
         var iti = window.intlTelInput(input, {
-            utilsScript: "node_modules/intl-tel-input/build/js/utils.js?1585994360633"
+            utilsScript: "intl-tel-input/build/js/utils.js?1585994360633"
         });
 
         var reset = function() {
